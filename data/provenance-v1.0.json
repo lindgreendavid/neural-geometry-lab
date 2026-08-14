@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "source": "UCI Optical Recognition of Handwritten Digits",
+  "doi": "10.24432/C50P49",
+  "url": "https://archive.ics.uci.edu/static/public/80/optical+recognition+of+handwritten+digits.zip",
+  "license": "CC BY 4.0",
+  "retrieved_at": "2026-08-14T19:54:04.748523+00:00",
+  "archive": {
+    "bytes": 591292,
+    "sha256": "0d7b054fea010270e9b3f06411c654c5e59547732ad626381980baffe0a23fb0"
+  },
+  "files": {
+    "optdigits.tra": {
+      "bytes": 563639,
+      "sha256": "e1b683cc211604fe8fd8c4417e6a69f31380e0c61d4af22e93cc21e9257ffedd"
+    },
+    "optdigits.tes": {
+      "bytes": 264712,
+      "sha256": "6ebb3d2fee246a4e99363262ddf8a00a3c41bee6014c373ed9d9216ba7f651b8"
+    }
+  },
+  "train": {
+    "rows": 3823,
+    "class_counts": {
+      "0": 376,
+      "1": 389,
+      "2": 380,
+      "3": 389,
+      "4": 387,
+      "5": 376,
+      "6": 377,
+      "7": 387,
+      "8": 380,
+      "9": 382
+    }
+  },
+  "test": {
+    "rows": 1797,
+    "class_counts": {
+      "0": 178,
+      "1": 182,
+      "2": 177,
+      "3": 183,
+      "4": 181,
+      "5": 182,
+      "6": 181,
+      "7": 179,
+      "8": 174,
+      "9": 180
+    }
+  }
+}

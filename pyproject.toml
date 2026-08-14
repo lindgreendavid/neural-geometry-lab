@@ -8,9 +8,10 @@ version = "1.0.0"
 description = "Reproducible neural-collapse geometry study with an interactive laboratory"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{name = "David Lindgreen"}]
-dependencies = ["numpy>=2.0,<3", "scikit-learn>=1.6,<2"]
+dependencies = ["numpy>=2.0,<2.3", "scipy>=1.11,<1.14", "scikit-learn>=1.6,<2"]
 
 [project.optional-dependencies]
 dev = ["build>=1.2", "mypy>=1.15", "pytest>=8.3", "pytest-cov>=6", "ruff>=0.9"]
@@ -32,6 +33,7 @@ select = ["E", "F", "I", "B", "UP", "SIM"]
 python_version = "3.10"
 strict = true
 packages = ["neural_geometry_lab"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
