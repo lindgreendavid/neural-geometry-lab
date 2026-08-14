@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neural-geometry-lab"
+version = "1.0.0"
+description = "Reproducible neural-collapse geometry study with an interactive laboratory"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "David Lindgreen"}]
+dependencies = ["numpy>=2.0,<3", "scikit-learn>=1.6,<2"]
+
+[project.optional-dependencies]
+dev = ["build>=1.2", "mypy>=1.15", "pytest>=8.3", "pytest-cov>=6", "ruff>=0.9"]
+
+[project.scripts]
+neural-geometry = "neural_geometry_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["neural_geometry_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=neural_geometry_lab --cov-report=term-missing --cov-fail-under=95"
