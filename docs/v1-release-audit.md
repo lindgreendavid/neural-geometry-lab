@@ -42,6 +42,11 @@ explicitly rejects any non-finite coefficient, intercept, hidden feature, or pro
 engineering correction preceded the formal 30-run analysis and does not alter data, seeds, models,
 epochs, checkpoints, metrics, or gates.
 
+Python 3.13 CI uses SciPy 1.14 or newer because SciPy 1.13 does not publish Python 3.13 wheels. Python
+3.10–3.12 retain the formal-run-compatible 1.11–1.13 range. SciPy is used only for deterministic rank
+assignment in the descriptive Spearman calculation; this packaging boundary does not alter the
+committed result register.
+
 ## Remaining limits
 
 One dataset, one writer split, one compact MLP, one optimizer, and ten algorithmic seeds were studied.
