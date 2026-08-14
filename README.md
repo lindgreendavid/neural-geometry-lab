@@ -13,6 +13,14 @@ Neural Geometry Lab is a frozen, reproducible comparison of multinomial logistic
 small ReLU network on the official writer-disjoint UCI Optical Digits split. It measures NC1–NC4 and
 stress-tests their interpretation under deterministic class imbalance and 20% symmetric label noise.
 
+## What this contributes
+
+This project contributes a protocol-frozen, seed-resolved test of whether four neural-collapse
+coordinates continue after interpolation and consistently accompany writer-disjoint generalization.
+The public theatre replays saved checkpoints while keeping its two-dimensional PCA view separate
+from the full nine-dimensional endpoints. It does **not** establish collapse as causal, necessary,
+sufficient, or representative of larger architectures and datasets.
+
 **[Open the interactive lab](https://lindgreendavid.github.io/neural-geometry-lab/)** ·
 **[Read the research report](reports/research-report-v1.0.md)** ·
 **[Inspect the frozen protocol](docs/protocol-v1.0.md)**
