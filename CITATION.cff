@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, result register, or interactive explanation, please cite it as below."
+title: "Neural Geometry Lab"
+type: software
+authors:
+  - family-names: Lindgreen
+    given-names: David
+version: 1.0.0
+date-released: 2026-08-14
+license: MIT
+repository-code: "https://github.com/lindgreendavid/neural-geometry-lab"
+url: "https://lindgreendavid.github.io/neural-geometry-lab/"
+keywords:
+  - neural collapse
+  - representation geometry
+  - machine learning
+  - class imbalance
+  - label noise
+  - reproducibility
+references:
+  - type: article
+    title: "Prevalence of neural collapse during the terminal phase of deep learning training"
+    doi: "10.1073/pnas.2015509117"
+  - type: dataset
+    title: "Optical Recognition of Handwritten Digits"
+    doi: "10.24432/C50P49"

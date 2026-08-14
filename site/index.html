@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="An interactive, reproducible test of neural-collapse geometry under clean, imbalanced, and noisy labels." />
+    <title>Neural Geometry Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#theatre">Skip to the experiment</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Neural Geometry Lab home">
+        <span class="brand-mark" aria-hidden="true">NG</span>
+        <span>Neural Geometry Lab</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#question">Question</a>
+        <a href="#theatre">Experiment</a>
+        <a href="#findings">Findings</a>
+        <a href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/reports/research-report-v1.0.md">Report</a>
+        <a href="https://github.com/lindgreendavid/neural-geometry-lab">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" id="question">
+        <div class="eyebrow">REPRODUCIBLE ML · v1.0.0</div>
+        <h1>When a network fits perfectly, what keeps moving?</h1>
+        <p class="lede">
+          Watch ten digit classes reorganize inside a neural network—then test whether cleaner
+          geometry really means better generalization to unseen writers.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#theatre">Enter the geometry theatre</a>
+          <a class="text-action" href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/docs/protocol-v1.0.md">Read the frozen protocol <span aria-hidden="true">↗</span></a>
+        </div>
+        <dl class="hero-facts" aria-label="Study design">
+          <div><dt>Dataset</dt><dd>UCI Optical Digits</dd></div>
+          <div><dt>Evidence</dt><dd>30 neural runs</dd></div>
+          <div><dt>Boundary</dt><dd>One writer-disjoint split</dd></div>
+        </dl>
+      </section>
+
+      <section class="question-strip" aria-label="Research question">
+        <span>THE TEST</span>
+        <p>Does neural-collapse geometry continue after zero training error—and does more collapse consistently predict better held-out performance?</p>
+      </section>
+
+      <section class="theatre-section" id="theatre" aria-labelledby="theatre-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">CHECKPOINTS, NOT A CARTOON</div>
+            <h2 id="theatre-title">Geometry theatre</h2>
+          </div>
+          <p>Every stop is a saved model state. Motion between stops is visual interpolation only.</p>
+        </div>
+
+        <div class="theatre-shell">
+          <aside class="controls" aria-label="Experiment controls">
+            <fieldset>
+              <legend>Training condition</legend>
+              <div class="segmented" id="condition-controls">
+                <button type="button" data-condition="clean" aria-pressed="true">Clean</button>
+                <button type="button" data-condition="long_tail" aria-pressed="false">Long tail</button>
+                <button type="button" data-condition="label_noise_20" aria-pressed="false">20% noise</button>
+              </div>
+            </fieldset>
+
+            <div class="epoch-control">
+              <div class="control-label"><label for="epoch-slider">Training checkpoint</label><output id="epoch-output" for="epoch-slider">Epoch 0</output></div>
+              <input id="epoch-slider" type="range" min="0" max="12" step="1" value="0" />
+              <div class="epoch-ends" aria-hidden="true"><span>initialized</span><span>epoch 600</span></div>
+            </div>
+
+            <button class="play-button" id="play-button" type="button"><span aria-hidden="true">▶</span> Play training</button>
+
+            <fieldset>
+              <legend>Visible observations</legend>
+              <label class="check"><input id="show-train" type="checkbox" checked /> Training sample</label>
+              <label class="check"><input id="show-test" type="checkbox" checked /> Held-out writers</label>
+            </fieldset>
+
+            <div class="projection-note">
+              <strong>Projection rule</strong>
+              <p>One fixed PCA basis per condition; the four NC metrics remain nine-dimensional.</p>
+            </div>
+          </aside>
+
+          <div class="stage-wrap">
+            <div class="stage-labels" aria-hidden="true"><span>Hidden representation · PCA view</span><span>Seed 1001</span></div>
+            <canvas id="geometry-canvas" role="img" aria-label="Projected hidden representations of digit classes and a full-dimensional class-angle wheel"></canvas>
+            <div class="canvas-legend" aria-label="Plot legend">
+              <span><i class="legend-train"></i> training</span>
+              <span><i class="legend-test"></i> held-out</span>
+              <span><i class="legend-centre"></i> class mean</span>
+              <span><i class="legend-error"></i> misclassified</span>
+            </div>
+            <p class="stage-caption">Left: a two-dimensional projection. Right: pairwise cosines of centred class means in the full hidden space; pale lines are closer to the ideal off-diagonal value −1/9.</p>
+          </div>
+
+          <div class="metric-rail" aria-live="polite">
+            <div class="metric"><span>NC1 · variability ↓</span><strong id="nc1-value">—</strong><canvas id="nc1-spark" aria-hidden="true"></canvas></div>
+            <div class="metric"><span>NC2 · simplex deviation ↓</span><strong id="nc2-value">—</strong><canvas id="nc2-spark" aria-hidden="true"></canvas></div>
+            <div class="metric"><span>NC3 · self-duality gap ↓</span><strong id="nc3-value">—</strong><canvas id="nc3-spark" aria-hidden="true"></canvas></div>
+            <div class="metric"><span>NC4 · decision disagreement ↓</span><strong id="nc4-value">—</strong><canvas id="nc4-spark" aria-hidden="true"></canvas></div>
+            <div class="metric accent"><span>Held-out accuracy ↑</span><strong id="accuracy-value">—</strong><canvas id="accuracy-spark" aria-hidden="true"></canvas></div>
+            <p id="state-description" class="sr-only"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="findings" id="findings" aria-labelledby="findings-title">
+        <div class="eyebrow">PRESPECIFIED DECISIONS</div>
+        <h2 id="findings-title">A partial confirmation is the result.</h2>
+        <p class="findings-lede">Two gates passed. Two narrowly missed. Nothing was redefined after the run.</p>
+        <div class="gate-grid">
+          <article class="gate passed"><span>10 / 10 · PASSED</span><h3>NC4 stayed stable</h3><p>Nearest-centre and classifier decisions did not diverge after clean interpolation.</p></article>
+          <article class="gate passed"><span>10 / 10 · PASSED</span><h3>Imbalance bent the simplex</h3><p>Every paired long-tail run had worse final NC2 than its clean counterpart.</p></article>
+          <article class="gate missed"><span>7 / 10 · NOT PASSED</span><h3>NC1 kept improving</h3><p>The direction was common, but not common enough for the frozen 8/10 gate.</p></article>
+          <article class="gate missed"><span>7 / 10 · NOT PASSED</span><h3>NC2 kept improving</h3><p>Simplex proximity was not seed-universal after the first zero-error epoch.</p></article>
+        </div>
+      </section>
+
+      <section class="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading">
+          <div><div class="eyebrow">THE USEFUL CONTRADICTION</div><h2 id="comparison-title">One geometry score is not a certificate.</h2></div>
+        </div>
+        <div class="comparison-grid">
+          <div class="big-number"><span>NC1 ↔ accuracy</span><strong>−0.518</strong><p>Moderate descriptive rank association across 30 runs.</p></div>
+          <div class="big-number"><span>NC2 ↔ accuracy</span><strong>−0.026</strong><p>Almost no descriptive rank association across 30 runs.</p></div>
+          <div class="interpretation"><p>The noisy-label MLP generalized much worse while its median NC2 was slightly lower than clean. That does not disprove neural collapse. It shows why collapse must be read as a multi-coordinate, regime-dependent phenomenon.</p><a href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/reports/research-report-v1.0.md">Read the complete interpretation →</a></div>
+        </div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div><div class="eyebrow">REPRODUCTION MAP</div><h2 id="method-title">What is measured—and what is not.</h2></div>
+        <ol>
+          <li><span>01</span><h3>Freeze</h3><p>Question, data split, model, seeds, checkpoints, metrics, and gates were written before retrieval.</p></li>
+          <li><span>02</span><h3>Stress</h3><p>Clean labels, a deterministic long tail, and exactly 20% classwise symmetric corruption.</p></li>
+          <li><span>03</span><h3>Measure</h3><p>NC1–NC4 in nine dimensions; prediction quality on official unseen writers.</p></li>
+          <li><span>04</span><h3>Stop at the boundary</h3><p>Seeds describe optimization sensitivity, not a population of tasks, people, or architectures.</p></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Neural Geometry Lab</strong><p>Real checkpoints. Reproducible code. Honest limits.</p></div>
+      <div class="footer-links"><a href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/reports/results-v1.0.json">Result register</a><a href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/data/provenance-v1.0.json">Data provenance</a><a href="https://github.com/lindgreendavid/neural-geometry-lab/blob/main/LICENSE">MIT licence</a></div>
+    </footer>
+    <noscript>This interactive requires JavaScript. The full result remains available in the research report and machine-readable register.</noscript>
+    <script src="app.js" defer></script>
+  </body>
+</html>
