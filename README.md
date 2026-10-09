@@ -13,6 +13,8 @@ Neural Geometry Lab is a frozen, reproducible comparison of multinomial logistic
 small ReLU network on the official writer-disjoint UCI Optical Digits split. It measures NC1–NC4 and
 stress-tests their interpretation under deterministic class imbalance and 20% symmetric label noise.
 
+**Paper:** [Pooled Correlations Hide the Structure (PDF)](paper/paper.pdf) · [citation and status](paper/README.md) · [version history](history.md)
+
 ## What this contributes
 
 This project contributes a protocol-frozen, seed-resolved test of whether four neural-collapse
@@ -34,8 +36,11 @@ The preregistered result is a partial confirmation, not a universal-collapse cla
 - continued clean NC1 and NC2 improvement occurred in **7/10** seeds each, below the frozen 8/10
   gates;
 - clean MLP median held-out accuracy was **96.27%** (range 95.88–96.94%);
-- across all 30 MLP runs, descriptive Spearman associations with accuracy were **−0.518** for NC1
-  and **−0.026** for NC2.
+- across all 30 MLP runs (pooling three training conditions), descriptive Spearman associations with accuracy
+  were **−0.518** for NC1 and **−0.026** for NC2. A post-hoc check shows the pooled NC1 figure is a
+  between-condition effect: within each condition NC1 and accuracy are essentially uncorrelated (pooled-within
+  −0.03; see the report's Amendment 1 and the paper). NC4 is the only coordinate associated with accuracy within
+  conditions (−0.49).
 
 The noisy-label condition generalized much worse while its median NC2 was slightly lower than clean.
 That does not refute neural collapse. It shows why one geometry coordinate is not a generalization

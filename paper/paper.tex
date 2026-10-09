@@ -1,0 +1,120 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black}
+
+\title{Pooled Correlations Hide the Structure:\\
+Neural-Collapse Coordinates and Held-Out Accuracy\\
+Within Training Conditions}
+\author{David Lindgreen}
+\date{October 9, 2026 \\[2pt] \small Version 0.1.0 \quad Preprint, not peer reviewed}
+
+\emergencystretch=3em
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Neural collapse describes four geometric regularities (NC1--NC4) of a classifier's last-layer features, often observed late in
+training~\cite{papyan2020}. We tested, in a small and fully inspectable setting, whether they continue to strengthen after
+interpolation and whether their strength tracks held-out accuracy: a $64\to64\to9\to10$ ReLU network on the official writer-disjoint
+UCI Optical Digits split~\cite{uci1998}, ten seeds in each of three training conditions (clean, long-tailed, 20\% label noise).
+Two of four preregistered directional gates passed; the re-run of the whole study reproduces the frozen results (largest numeric
+difference $3.4\times10^{-6}$, identical gates). The original report quoted a descriptive Spearman association of $-0.518$
+between final NC1 and test accuracy over all 30 runs. We show that this pooled figure is produced by the three conditions, not by
+NC1: inside each condition the association is $+0.04$, $-0.04$ and $-0.09$, and the pooled within-condition association is
+$-0.03$ (95\% seed-bootstrap interval $-0.49$ to $+0.42$). The same holds for NC3 (pooled $-0.75$, within $+0.05$). Only NC4, the
+disagreement between the network and nearest-class-centre decisions, is associated with accuracy within conditions
+($-0.49$; $-0.80$ to $-0.04$), consistently across all three. This is an instance of Simpson's paradox~\cite{simpson1951}
+in a two-variable summary.
+\end{abstract}
+
+\section{Question}
+After a small network reaches zero training error, does its hidden representation continue toward neural-collapse geometry, and
+does stronger collapse consistently accompany better generalization to unseen writers? The setting is deliberately small:
+3{,}823 training and 1{,}797 test examples from disjoint writers, a multinomial logistic reference, and ten algorithmic seeds
+per condition (seeds are replications of the optimizer, not samples of people).
+
+\section{Frozen design and results}
+The three conditions were the clean training set, a deterministic long tail (class $c$ keeps $\lfloor n_c10^{-c/9}\rfloor$ rows, at
+least 25; 1{,}559 rows) and exactly 20\% symmetric label noise per class (761 changed labels). Models were trained for 600 Adam epochs.
+The collapse coordinates are NC1 (within-class variability relative to between-class, lower is more collapsed), NC2 (deviation
+of centred class means from the simplex equiangular frame), NC3 (classifier--class-mean misalignment) and NC4 (disagreement with
+nearest-class-centre decisions), computed in the full nine-dimensional hidden space.
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lcc}
+\toprule
+Preregistered gate (at least 8 of 10 seeds) & Result & Decision\\
+\midrule
+Clean: final NC1 below first-zero-error NC1 & 7/10 & not passed\\
+Clean: final NC2 below first-zero-error NC2 & 7/10 & not passed\\
+Clean: final NC4 no greater than first-zero-error NC4 & 10/10 & passed\\
+Long tail: final NC2 worse than clean (paired) & 10/10 & passed\\
+\bottomrule
+\end{tabular}
+\caption{Frozen directional gates; two of four pass.}
+\end{table}
+Clean-condition MLP test accuracy had a median of 96.27\% (95.88--96.94\%), long tail 92.29\%, label noise 81.64\%; the logistic
+reference reached 94.77\%, 91.88\% and 93.60\%. The frozen report quoted descriptive pooled Spearman associations of $-0.518$ (NC1)
+and $-0.026$ (NC2) with test accuracy over the 30 MLP runs and reported no $p$-values, since seeds are not independent samples of a
+population. We re-ran the entire study from the pinned dataset: every number reproduces (largest absolute difference
+$3.4\times10^{-6}$ in a class-angle Gram entry), as do all gate counts and both pooled correlations.
+
+\section{Post-hoc: associations within conditions}
+The three conditions differ by more than ten accuracy points, so any metric that also differs between conditions will correlate with
+accuracy in a pooled sample whether or not it tracks accuracy among comparable runs. We therefore recomputed each coordinate's Spearman
+association with final test accuracy (i) pooled, (ii) inside each condition and (iii) pooled within condition (ranks computed inside
+each condition), with percentile intervals from a 5{,}000-resample bootstrap over seeds within condition. This analysis was not
+preregistered and all of it is reported.
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lcccccc}
+\toprule
+ & Pooled & Within (pooled) & 95\% interval & Clean & Long tail & Label noise\\
+\midrule
+NC1 & $-0.518$ & $-0.031$ & $-0.49$ to $0.42$ & $+0.04$ & $-0.04$ & $-0.09$\\
+NC2 & $-0.026$ & $-0.310$ & $-0.63$ to $0.12$ & $-0.56$ & $-0.24$ & $-0.13$\\
+NC3 & $-0.750$ & $+0.052$ & $-0.37$ to $0.46$ & $-0.16$ & $+0.21$ & $+0.13$\\
+NC4 & $-0.622$ & $-0.486$ & $-0.80$ to $-0.04$ & $-0.56$ & $-0.44$ & $-0.45$\\
+\bottomrule
+\end{tabular}
+\caption{Spearman association between each final collapse coordinate and test accuracy; each condition has 10 seeds.}
+\end{table}
+For NC1 and NC3 the pooled association disappears within conditions: the apparent link between ``more collapsed'' and
+``more accurate'' is the difference between conditions. NC2 shows a weak, imprecise negative within-condition association
+(largest in the clean condition), even though its pooled value is near zero because the conditions pull in opposite directions.
+NC4 stands out: its within-condition association is moderately negative in every condition and its pooled-within interval excludes
+zero, though each single-condition interval does not.
+
+\section{Discussion}
+The frozen conclusion, that a single collapse coordinate is not a general certificate of generalization, is supported and, if
+anything, sharpened: NC1 and NC3 are condition markers rather than predictors of accuracy among comparable runs, and the one
+coordinate that tracks accuracy within conditions is the decision-level one (NC4). The pooled NC1 figure in the original report should
+be read as a between-condition association. The within-condition estimates are imprecise (ten seeds per condition, intervals wide) and
+describe seed-to-seed variation in one small architecture, dataset and optimizer; they neither establish nor rule out a causal role
+for collapse.
+
+\section{Limitations}
+One architecture, one dataset, three hand-built conditions, ten seeds each; collapse coordinates measured at the final epoch only;
+the bootstrap resamples seeds, which are not draws from a population of tasks; and the within-condition analysis is exploratory.
+
+\section*{Reproducibility and AI assistance}
+Code, frozen results, the within-condition audit and tests:\\
+\url{https://github.com/lindgreendavid/neural-geometry-lab}\\
+Interactive laboratory:\\
+\url{https://lindgreendavid.github.io/neural-geometry-lab/}\\
+The analysis code, tests and drafts of this text were produced with substantial assistance from an AI system (Claude, Anthropic);
+the author is responsible for the content.
+
+\begin{thebibliography}{9}
+\bibitem{papyan2020} V.~Papyan, X.~Y. Han, D.~L. Donoho, Prevalence of neural collapse during the terminal phase of deep learning
+training, \emph{Proc. Natl. Acad. Sci. USA} \textbf{117}, 24652--24663 (2020).
+\bibitem{uci1998} E.~Alpaydin and C.~Kaynak, Optical Recognition of Handwritten Digits, UCI Machine Learning Repository (1998),
+doi:10.24432/C50P49.
+\bibitem{simpson1951} E.~H. Simpson, The interpretation of interaction in contingency tables,
+\emph{J. R. Stat. Soc. B} \textbf{13}, 238--241 (1951).
+\end{thebibliography}
+\end{document}

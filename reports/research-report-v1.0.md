@@ -161,3 +161,24 @@ in the release audit rather than silently normalized.
    <https://proceedings.mlr.press/v267/wu25u.html>
 5. Han, T. et al. (2025). *Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via
    Grokking*. NeurIPS 2025. <https://openreview.net/forum?id=lbtOctHDQ3>
+
+## Amendment 1 (2026-10-09): within-condition associations
+
+Post-hoc and not preregistered (`src/neural_geometry_lab/within_condition.py`,
+`reports/post-release-within-condition.json`; all results reported). The frozen v1.0 results are unchanged, and a complete
+re-run of the study reproduces them (largest absolute numeric difference 3.4e-6, identical gate counts and pooled correlations).
+
+The descriptive Spearman associations above pool three training conditions whose accuracies differ by more than ten points,
+so they mix between-condition and within-condition variation. Recomputed inside each condition (ten seeds each), with percentile
+bootstrap intervals over seeds:
+
+| Coordinate | Pooled | Pooled within condition (95% interval) | Clean | Long tail | Label noise |
+| --- | ---: | --- | ---: | ---: | ---: |
+| NC1 | −0.518 | −0.031 (−0.49 to 0.42) | +0.04 | −0.04 | −0.09 |
+| NC2 | −0.026 | −0.310 (−0.63 to 0.12) | −0.56 | −0.24 | −0.13 |
+| NC3 | −0.750 | +0.052 (−0.37 to 0.46) | −0.16 | +0.21 | +0.13 |
+| NC4 | −0.622 | −0.486 (−0.80 to −0.04) | −0.56 | −0.44 | −0.45 |
+
+The pooled NC1 association is therefore a between-condition effect; NC4 is the only coordinate whose within-condition association
+has an interval excluding zero. Intervals are wide with ten seeds per condition.
+
