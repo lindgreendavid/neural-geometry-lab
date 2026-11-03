@@ -23,7 +23,7 @@ The public theatre replays saved checkpoints while keeping its two-dimensional P
 from the full nine-dimensional endpoints. It does **not** establish collapse as causal, necessary,
 sufficient, or representative of larger architectures and datasets.
 
-**[Open the interactive lab](https://lindgreendavid.github.io/neural-geometry-lab/)** ·
+**[Open the interactive lab](https://lindgreendavid.com/neural-geometry-lab/)** ·
 **[Read the research report](reports/research-report-v1.0.md)** ·
 **[Inspect the frozen protocol](docs/protocol-v1.0.md)**
 
